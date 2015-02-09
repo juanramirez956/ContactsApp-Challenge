@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ContactsApp</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="firstName">firstName</string>
+    <string name="lastName">lastName</string>
+    <string name="text_empty_list">No contacts here!</string>
+    <string name="title_activity_add_contact">AddContact</string>
+    <string name="done">done</string>
+    <string name="Add">Add</string>
+    <string name="canceled_message">canceled</string>
+
+</resources>
