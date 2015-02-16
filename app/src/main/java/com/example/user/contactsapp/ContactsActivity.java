@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,8 +69,17 @@ public class ContactsActivity extends ActionBarActivity {
         public static final int REQUEST_CODE = 0;
         ContactListAdapter mAdapter;
         List<ContactSingle> contactsList = new ArrayList<>();
+        DataBaseHelper mDBHelper = null;
+
 
         public PlaceholderFragment() {
+        }
+
+        public DataBaseHelper getDBHelper() {
+            if (mDBHelper == null)
+                mDBHelper= OpenHelperManager.getHelper(getActivity(), DataBaseHelper.class);
+            return mDBHelper;
+
         }
 
         @Override
@@ -75,6 +88,12 @@ public class ContactsActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
             setHasOptionsMenu(true);
             final ListView listView = (ListView)rootView.findViewById(android.R.id.list);
+            try {
+                Dao<ContactSingle,Integer> dao = getDBHelper().getContactDao();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            contactsList = getDBHelper().selectAll();
             mAdapter = new ContactListAdapter(getActivity(),contactsList);
             listView.setAdapter(mAdapter);
             return rootView;
@@ -121,6 +140,15 @@ public class ContactsActivity extends ActionBarActivity {
             }
 
             return handled;
+        }
+
+        @Override
+        public void onDestroy() {
+            if(mDBHelper != null){
+                OpenHelperManager.releaseHelper();
+                mDBHelper = null;
+            }
+            super.onDestroy();
         }
     }
 }
