@@ -11,5 +11,8 @@
     <string name="done">done</string>
     <string name="Add">Add</string>
     <string name="canceled_message">canceled</string>
+    <string name="text_image_hint">click to add an image</string>
+    <string name="title_activity_edit_contact">EditContact</string>
+    <string name="Edit">Edit</string>
 
 </resources>

@@ -1,10 +1,15 @@
 package com.example.user.contactsapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,7 +18,7 @@ import java.util.List;
  * Created by user on 09/02/2015.
  */
 public class ContactListAdapter extends ArrayAdapter<ContactSingle> {
-    private  List<ContactSingle> mContactsList;
+    public  List<ContactSingle> mContactsList;
     private  Context mContext;
 
     public  ContactListAdapter(Context context, List<ContactSingle> contactsList)
@@ -41,6 +46,13 @@ public class ContactListAdapter extends ArrayAdapter<ContactSingle> {
             edtFirstName.setText(mContactsList.get(position).getFirstName());
             TextView edtLastName = (TextView)rowView.findViewById(R.id.txt_last);
             edtLastName.setText(mContactsList.get(position).getLastName());
+            byte[] byteArray = mContactsList.get(position).getmPhoto();
+            if(byteArray != null){
+                Log.d("DEBUG", "BYTEARRAY  NO NULL");
+                ImageView imageViewPhoto = (ImageView)rowView.findViewById(R.id.photo);
+                Bitmap bm = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                imageViewPhoto.setImageBitmap(bm);
+            }
         }
         return  rowView;
     }
